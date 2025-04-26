@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - A Safety Awareness Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .search-results-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-header {
+            margin-bottom: 20px;
+        }
+
+        .search-results-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .search-results-list li {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .search-results-list li:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .quiz-description {
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .play-quiz-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .play-quiz-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #777;
+            padding: 20px 0;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-home:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-results-container">
+        <div class="search-header">
+            <h2><i class="fas fa-search"></i> Search Results</h2>
+            <p>Results for: <span id="search-query"></span></p>
+        </div>
+        <ul class="search-results-list" id="results-list">
+            </ul>
+        <div id="no-results" class="no-results" style="display:none;">
+            <p>No quizzes found matching your search criteria.</p>
+        </div>
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchParams = new URLSearchParams(window.location.search);
+            const searchQuery = searchParams.get('query');
+            const searchQueryDisplay = document.getElementById('search-query');
+            const resultsList = document.getElementById('results-list');
+            const noResultsDiv = document.getElementById('no-results');
+
+            if (searchQuery) {
+                searchQueryDisplay.textContent = searchQuery;
+                // In a real application, you would fetch search results
+                // based on the searchQuery and populate the resultsList.
+                // For this example, we'll simulate some results.
+                const fakeResults = [
+                    { id: 1, title: 'Science Trivia', description: 'Test your science knowledge.' },
+                    { id: 2, title: 'World Capitals', description: 'Identify capitals around the globe.' }
+                ].filter(quiz =>
+                    quiz.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    quiz.description.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+
+                if (fakeResults.length > 0) {
+                    fakeResults.forEach(result => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <div class="search-result-item">
+                                <div>
+                                    <div class="quiz-title">${result.title}</div>
+                                    <div class="quiz-description">${result.description}</div>
+                                </div>
+                                <a href="quiz.html?id=${result.id}" class="play-quiz-btn">Play</a>
+                            </div>
+                        `;
+                        resultsList.appendChild(listItem);
+                    });
+                } else {
+                    noResultsDiv.style.display = 'block';
+                }
+            } else {
+                searchQueryDisplay.textContent = 'No search term provided.';
+                noResultsDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

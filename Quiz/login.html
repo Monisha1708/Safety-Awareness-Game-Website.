@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - A Safety Awareness Game</title>
+    <link rel="stylesheet" href="style.css">
+    <body background="C:\Users\monis\OneDrive\Desktop\Quiz\images5.jpg">
+    </body>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff; /* This line adds the white background */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: calc(100% - 12px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .login-button:hover {
+            opacity: 0.9;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #777;
+        }
+
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+        <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const errorMessageDiv = document.getElementById('errorMessage');
+    
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+    
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+    
+                try {
+                    const response = await fetch('/login', { // Replace '/login' with your actual server endpoint
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ username, password }),
+                    });
+    
+                    const data = await response.json();
+    
+                    if (response.ok && data.success) {
+                        // **Login Successful!**
+                        console.log('Login successful:', data);
+    
+                        // Store any returned token or user information (optional)
+                        if (data.token) {
+                            localStorage.setItem('authToken', data.token); // Example using localStorage
+                        }
+                        if (data.user) {
+                            localStorage.setItem('user', JSON.stringify(data.user)); // Example storing user object
+                        }
+    
+                        // Redirect to the main game page
+                        window.location.href = 'index.html';
+                    } else {
+                        // **Login Failed**
+                        console.error('Login failed:', data);
+                        errorMessageDiv.textContent = data.message || 'Invalid username or password.';
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    errorMessageDiv.textContent = 'An error occurred while trying to log in.';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <body background="C:\Users\monis\OneDrive\Desktop\Quiz\image1.jpg">
+    </body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - A Safety Awareness Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .profile-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #555;
+            overflow: hidden;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-details p {
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-details p:last-child {
+            border-bottom: none;
+        }
+
+        .back-home {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-home:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2><i class="fas fa-user"></i> User Profile</h2>
+            </div>
+        <div class="profile-picture">
+            <i class="fas fa-user fa-3x"></i>
+            </div>
+        <div class="profile-details">
+            <p><strong>Username:</strong> <span id="username">Guest</span></p>
+            <p><strong>Email:</strong> <span id="email">guest@example.com</span></p>
+            <p><strong>Total Score:</strong> <span id="total-score">0</span></p>
+            <p><strong>Quizzes Played:</strong> <span id="quizzes-played">0</span></p>
+            </div>
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+
+    <script>
+        
+         document.addEventListener('DOMContentLoaded', function() {
+             const userData = {
+                 username: 'Moni',
+                 email: 'moni123@gmail.com',
+                 totalScore: 1500,
+                 quizzesPlayed: 42
+             };
+        
+             document.getElementById('username').textContent = userData.username;
+             document.getElementById('email').textContent = userData.email;
+             document.getElementById('total-score').textContent = userData.totalScore;
+             document.getElementById('quizzes-played').textContent = userData.quizzesPlayed;
+         });
+    </script>
+</body>
+</html>
